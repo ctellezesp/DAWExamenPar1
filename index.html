@@ -2,63 +2,38 @@
 <html>
 <head>
 	<title>Opción 2</title>
-	<style type="text/css">
-		.flex-div{
-			display: flex;
-			width: 100%;
-		}
-		.center{
-			justify-content: center;
-			text-align: center;
-		}
-		.inline-flex{
-			display: inline-flex;
-			flex-direction: row;
-			align-items: center;
-			text-align: center;
-		}
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<script type="text/javascript">
+		function simpleAlert(){
+			let xhr = new XMLHttpRequest();
+			xhr.open("GET", "https://yvone.github.io/DAW/some-numbers.json");
+			xhr.onload = function(){
+				if(this.readyState == 4 && this.status == 200){
+					let data = JSON.parse(this.responseText);
+					console.log(data);
+					let pares = data.filter(function(elem){
+						return (elem%2)==0;
+					});
+					console.log(pares);
+					let suma = pares.reduce(function(acum, elem){
+						return acum + elem;
+					});
+					console.log("La suma de los elementos es: " + suma);
+					let mult = pares.map(function(elem){
+						return elem * 10;
+					});
+					console.log(mult);
+					window.alert("Aray original: " + data + ", Datos pares: " + pares + ", La suma de todos los pares: " + suma + ", Array de multiplicarlos por 10: " + mult);
+				}
+			}
 
-		#help{
-			width: 15px;
-			height: 15px;
-		}
-		.column-flex{
-			flex-direction: column;
-		}
+			xhr.onerror = function(){
+				window.alert("No se pudo conectar");
+			}
 
-		.tongues{
-			width: 150px;
-			height: 150px;
+			xhr.send();
 		}
-		.row{
-			flex-direction: row;
-		}
-
-		.btn{
-			height: 50px;
-			width: 60%;
-			background: rgb(86,105,255);
-			border-radius: 20px;
-		}
-
-		.btn-text{
-			color: white;
-			font-size: 1em;
-		}	
-
-		.img-btn{
-			width: 20px;
-			height: 20px;
-		}
-
-		.center2{
-			align-items: center;
-		}
-
-		.width100{
-			width: 100%;
-		}
-	</style>
+	</script>
 </head>
 <body>
 <div class="flex-div center">
@@ -73,7 +48,7 @@
 	<div class="inline-flex center"><h3>3.</h3><img class="tongues" src="assets/imgC.png"></div>
 </div>
 <div class="flex-div column-flex width100 center">
-	<div class="btn center"><br>
+	<div onclick="simpleAlert()" class="btn center"><br>
 		<div class="inline-flex center">
 			<img class="img-btn" src="assets/scan_gray_icon.png">
 			<span class="btn-text">Begin</span>
